@@ -1,0 +1,41 @@
+.for-main{
+    background: repeating-linear-gradient(45deg, #c7edff, #dcf4ff 200px);
+    height: 92.4vh;
+}
+.statistics{
+    color: darkgray;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 1vw;
+}
+.btn-create{
+    background-color: #0E86D4FF;
+}
+.btn-create:hover,.btn-create:active{
+    background-color: #0e96ee !important;
+}
+#donutchart{
+    height: 100%;
+}
+#donutchart g text{
+    font-family: cursive !important;
+}
+#f-dt{
+    align-self: end;font-size: smaller;
+}
+#alrt{
+    //color: rgb(149, 29, 50);
+    background-color: rgb(254, 214, 221);
+    border: 2px solid;
+    border-radius: 0.5rem;
+    padding: 0.2rem;
+    color: rgb(46, 153, 220);
+}
+@media (max-width: 450px){
+    .statistics{font-size: xx-small !important;}
+}
+@media (max-width: 575px) {
+    #donutchart{height: 50%;}
+    #f-dt{font-size: 2vw;}
+}

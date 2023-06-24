@@ -1,0 +1,26 @@
+
+<h2>Broj odgovorenih pitanja:<%=odg%>, broj ne odgovorenih pitanja:<%=nodg%></h2>
+  <h2>Rating:</h2>
+  <ul>
+    <%for(let i =0;i< rating.length; i++){%>
+      <%if(rating[i]){%>
+        <li><span><%=i+1%>:</span><%=rating[i].broj%></li>
+      <%}%>
+    <%}%>
+  </ul>
+Pitanja:
+<table>
+  <%for(let i =0; i<questions.length; i++){%>
+  <tr>
+    <td>
+      <h3><span><%=i+1%>. pitanje: </span><%=questions[i].tekst%></h3>
+      <span>Broj lajkova: <%=questions[i].likes%></span>
+    </td>
+    <%if(questions[i].answer){%>
+    <td>
+      <h3><span>Odgovor: </span><%=questions[i].answer%></h3>
+    </td>
+    <%}%>
+  </tr>
+  <%}%>
+</table>

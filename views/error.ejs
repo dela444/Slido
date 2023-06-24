@@ -1,0 +1,10 @@
+<div style="display: flex;justify-content: center;align-items: center;width: 100vw;height: 100vh">
+    <div>
+        <h1><img src="/images/blue-error.png" style="width: calc(3vw + 3vh);"> Sorry an error occured</h1>
+        <h1>Status:<%= error.status %></h1>
+    </div>
+</div>
+<script>
+    console.log(<%= message %>);
+    console.log(<%= error.stack %>);
+</script>

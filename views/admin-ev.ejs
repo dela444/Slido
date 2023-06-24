@@ -1,0 +1,15 @@
+
+<table class="table table-hover">
+  <tbody>
+  <%for(let i =0; i<events.length; i++){%>
+  <tr class="d-flex flex-column for-redirection" style="height: 8vh" data-event="<%=events[i].id%>">
+
+    <td class="d-flex flex-row justify-content-between hvr-sweep-to-right" style="flex:1;background-color: #666666a6;">
+        <h3 style="align-self: start; padding-left: 0.5vw;font-size: 1.5vw"><%=events[i].name%></h3>
+        <button class="delete-button-events btn btn-rounded btn-danger" data-event-id="<%=events[i].id%>" style="font-size: 0.7vw;align-self: center">Delete</button>
+    </td>
+
+  </tr>
+  <%}%>
+  </tbody>
+</table>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    var prva = '<%- JSON.stringify(uodg) %>';
+    let druga = prva.split(':');
+    let lll='';
+    for(let i=1;i<druga[1].length;i++){
+      if(druga[1][i]==='"'){
+        break;
+      }
+      lll += druga[1][i];
+    }
+    lll = parseInt(lll);
+    prva = '<%- JSON.stringify(unodg) %>';
+    druga = prva.split(':');
+    let kkk='';
+    for(let i=1;i<druga[1].length;i++){
+      if(druga[1][i]==='"'){
+        break;
+      }
+      kkk += druga[1][i];
+    }
+    kkk=parseInt(kkk);
+    if(kkk===0 && lll===0){
+      kkk=50;
+      lll=50;
+    }
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Task', 'Hours per Day'],
+        ['Answered',     lll],
+        ['Unanswered',      kkk],
+      ]);
+      var options = {
+        title: 'Overall questions',
+        pieHole: 0.4,
+        slices: {
+          0: { color: '#0E86D4' },
+          1: { color: '#232323' }
+        }
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+      chart.draw(data, options);
+    }
+  </script>
+  <title>Projekat</title>
+  <link rel='stylesheet' href='/stylesheets/style.css'>
+  <link rel='stylesheet' href='/stylesheets/host.css'>
+  <link rel="icon" href="/images/s1.png">
+</head>
+<body class="h-100">
+
+<header class="navbar navbar-expand-lg navbar-light bg-dark justify-content-between" style="height: 7.6vh">
+  <h3 class="header-text ms-3"><%=ime%></h3>
+  <button type="button" id="logout" class="btn btn-outline-primary me-3">Logout</button>
+</header>
+
+<main class="container-fluid overflow-auto for-main">
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header ex">
+          <h1 class="modal-title fs-4 exampleModalLabel">Create new Slido</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="height: 55vh;">
+          <form action="http://localhost:3000/host/create-meeting" method="post" enctype="multipart/form-data" class="h-100 d-flex flex-column justify-content-between" id="forma">
+            <div class="d-flex flex-row justify-content-between" style="flex:1;">
+              <div class="d-flex flex-column justify-content-around">
+                <div>
+                  <label for="n" class="fs-5">Name:</label>
+                  <input class="form-control" type="text" name="name" id="n" placeholder="Name" required/>
+                </div>
+                <div>
+                  <label for="c" class="fs-5">Code:</label>
+                  <label for="c" class="fs-5" style="display: none;" id="alrt">Sorry this code already exists</label>
+                  <input class="form-control" type="text" name="code" id="c" placeholder="Code" required/>
+                </div>
+                <div>
+                  <label for="d" class="fs-5">Date:</label>
+                  <input class="form-control" type="date" name="date" id="d" placeholder="Meeting date" required/>
+                </div>
+                <div>
+                  <label for="ti" class="fs-5">Time:</label>
+                  <input class="form-control" type="time" name="time" id="ti" placeholder="Meeting time" required/>
+                </div>
+                <div>
+                  <label for="f" class="fs-5">Upload cover image:</label>
+                  <input class="form-control" type="file" id="f" name="cover" />
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" role="switch" id="Switch" name="Switch">
+                  <label class="form-check-label fs-5" for="Switch">Send me mail report</label>
+                </div>
+              </div>
+              <div class="d-flex flex-column" style="width: 30%;">
+                <label for="interval" class="fs-5 mt-2">Interval:</label>
+                <select class="form-select fs-5 mt-2" name="interval">
+                  <option value="none">None</option>
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                </select>
+                <label for="days-of-week" class="fs-5 mt-2">Days of week:</label>
+                <div class="form-check fs-5 mt-2">
+                    <input class="form-check-input" type="checkbox" name="days-of-week" value="1" />
+                    <label class="form-check-label">Monday</label>
+                </div>
+                <div class="form-check fs-5">
+                  <input class="form-check-input" type="checkbox" name="days-of-week" value="2" /> Tuesday
+                </div>
+                <div class="form-check fs-5">
+                  <input class="form-check-input" type="checkbox" name="days-of-week" value="3" /> Wednesday
+                </div>
+                <div class="form-check fs-5">
+                  <input class="form-check-input" type="checkbox" name="days-of-week" value="4" /> Thursday
+                </div>
+                <div class="form-check fs-5">
+                  <input class="form-check-input" type="checkbox" name="days-of-week" value="5" /> Friday
+                </div>
+                <div class="form-check fs-5">
+                  <input class="form-check-input" type="checkbox" name="days-of-week" value="6" /> Saturday
+                </div>
+                <div class="form-check fs-5">
+                  <input class="form-check-input" type="checkbox" name="days-of-week" value="0" /> Sunday
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer m-footer">
+          <button type="button" class="btn btn-secondary fs-5" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary fs-5 ex border-0" onclick="submitForm()">Create</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-around">
+
+    <h2 class="table-headline d-none d-sm-block animate__animated animate__flipInX">My Slidos</h2>
+
+    <div id="eventi" class="col-sm-10 col-10 p-0 overflow-auto animate__animated animate__fadeInDown">
+      <table class="table table-hover">
+        <%for(let i =0; i<events.length; i++){%>
+          <tr data-event-id="<%=events[i].id%>">
+            <%let eve = '1' + events[i].id%>
+              <td class="d-flex flex-row justify-content-between td2 hvr-underline-reveal" onclick="redirectToEvent(<%=eve%>)">
+                <div class="d-flex flex-row">
+                  <img src="/images/s1.png" width="45vw">
+                  <h3 style="align-self: start; padding-left: 0.5vw; color: #505050;"><%=events[i].ime%></h3>
+                  <div class="d-flex flex-row" id="f-dt">
+                    <span>Date: <%=events[i].datum.toISOString().split('T')[0]%>, Time: <%=events[i].vrijeme.substring(0, 5)%>, </span>
+                    <%if(events[i].interval === 'none'){%>
+                      <span>Interval: none</span>
+                    <%}else if(events[i].interval === 'weekly'){
+                      let days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                      let t='';
+                      for(let j=0; j < events[i].daysofweek.length;j++){
+                        t += days[events[i].daysofweek[j]] + ' ';
+                      }%>
+                    <span>Interval: weekly, Days: <%=t%></span>
+                    <%}else{%><span>Interval: monthly</span><%}%>
+                  </div>
+
+                </div>
+                <div class="d-flex flex-row" style="float: right">
+                  <button class="delete-button-events btn btn-outline-danger btn-rounded">Delete</button>
+                  <span class="statistics ff"><span class="text-success b"><%=events[i].broj_odg%></span> | <span class="text-danger b"><%=events[i].broj_neodg%></span></span>
+                </div>
+              </td>
+          </tr>
+        <%}%>
+      </table>
+    </div>
+
+    <div id="overall" class="col-sm-10 col-9 order-sm-first order-first mb-sm-0 mb-5 mt-5 mt-sm-3 card c-effect animate__animated animate__fadeIn">
+      <div class="container-fluid h-100">
+        <div class="row h-100">
+          <div class="col-sm-7 col-12" id="donutchart"></div>
+          <div class="col-sm-5 col-12">
+              <div class="d-flex justify-content-center">
+                <button type="button" class="btn border-0 w-100 pt-sm-2 pt2 mb-2 mt-sm-2 mb-sm-2 btn-create" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Create new Slido</button>
+              </div>
+              <div>
+                <details class="f-details c-effect2">
+                  <summary  class="c-effect2 sum1 pb-3 pt-3 pb-sm-3 pt-sm-3" id="za_extend"><span class="ff">See hidden questions</span> <img class="rotate" src="/images/down-arrow.png"></summary>
+                  <table class="table table-hover">
+                    <%for(let i = 0; i<hidden.length; i++){%>
+                    <tr class="d-flex flex-column">
+                      <td>
+                        <span><%=hidden[i].tekst%></span>
+                      </td>
+                      <%if(hidden[i].answer){%>
+                      <td style="opacity: 0.45">
+                        <span><%=hidden[i].answer%></span>
+                      </td>
+                      <%}%>
+                    </tr>
+                    <%}%>
+                  </table>
+                </details>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="/javascripts/for-host.js"></script>
+</body>
+</html>

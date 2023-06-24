@@ -1,0 +1,40 @@
+
+
+  <%for(let i =0; i<questions.length; i++){%>
+  <tr class="question d-flex flex-column">
+    <td class="d-flex flex-row justify-content-between td2 hvr-underline-reveal">
+      <div class="d-flex flex-row justify-content-between" style="width: 100%;">
+
+        <h3 class="f-text"><%=questions[i].tekst%></h3>
+
+        <div class="d-flex flex-row align-items-center">
+          <div style="float: right;display: flex;flex-wrap: nowrap;margin-right: 5px;">
+            <span style="font-size: 1.3vw"><%=questions[i].likes%></span>
+            <img src="/images/like.png" style="width: 1.5vw">
+          </div>
+
+          <div style="float: right;display: flex;flex-wrap: nowrap;">
+            <button class="answer-button btn btn-outline-success btn-rounded" data-question-id="<%=questions[i].id%>" data-event-id="<%=ev%>" style="font-size: 1.2vw;align-self: center">Answer</button>
+            <button class="delete-button btn btn-outline-danger btn-rounded" data-question-id="<%=questions[i].id%>" data-event-id="<%=ev%>" style="font-size: 1.2vw">Delete</button>
+            <button class="hide-button btn btn-outline-warning btn-rounded" data-question-id="<%=questions[i].id%>" data-event-id="<%=ev%>" style="font-size: 1.2vw">Hide</button>
+          </div>
+        </div>
+      </div>
+    </td>
+    <td style="padding:0">
+
+      <form class="answer-form" data-question-id="<%=questions[i].id%>" style="display: none;">
+        <textarea class="answer-input" data-question-id="<%=questions[i].id%>" id="textarea2"></textarea>
+        <button class="submit-answer btn btn-rounded btn-success" data-question-id="<%=questions[i].id%>" data-event-id="<%=ev%>" style="float: right">Answer</button>
+      </form>
+
+    </td>
+    <%if(questions[i].answer){%>
+    <td class="td2 bg-answer2">
+      <h3><%=questions[i].answer%></h3>
+    </td>
+    <%}else{%>
+      <td class="td2 bg-answer2" style="display: none"></td>
+    <%}%>
+  </tr>
+  <%}%>

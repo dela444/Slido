@@ -1,0 +1,38 @@
+.im2{
+    width: 4vw !important;
+    margin-left: 1vw;
+    height: 4vw !important;
+}
+#overall2{height: 60vh;}
+#donutchart1{
+    height: 50%;
+}
+#for-for{
+    justify-content: center;
+    margin: 6px;
+}
+#word{
+    width: 15vw;height: 3.5vw;
+}
+#for-forbidden{
+    float:right;
+    height: 3.5vw;
+    font-size: 1.5vw;
+}
+@media (max-width: 450px){
+    #word{width: 30vw;height: 5vw;}
+    #for-forbidden{height: 5vw;font-size: 2vw;}
+    #donutchart1{width: 100% !important;height: 85% !important;}
+}
+@media (max-width: 575px) {
+    #overall2{height: 30vh}
+    .im2{width: 6vw !important;height: 6vw !important;}
+    #donutchart1{width: 64%;height: 100%}
+}
+@media (min-width: 575px) and (max-width: 767px) {
+    .im2{width: 5vw !important;height: 5vw !important;}
+    #donutchart1{width: 70%;height: 100%}
+}
+@media (min-width: 768px) and (max-width: 992px){
+    .im2 {width: 5vw !important;height: 5vw !important;}
+}

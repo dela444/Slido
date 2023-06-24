@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    let prva,druga,jedinice,dvice,trice,cetvorke,petice;
+    for(let i = 0; i<5;i++){
+      if(i===0){prva = '<%- JSON.stringify(j) %>';}else if(i===1){prva = '<%- JSON.stringify(d) %>';}else if(i===2){
+        prva = '<%- JSON.stringify(t) %>';
+      }else if(i===3){prva = '<%- JSON.stringify(c) %>';}else{prva = '<%- JSON.stringify(p) %>';}
+      if(prva===''){prva='{rate:n,broj:"0"}'}
+      druga = prva.split(',');
+      druga = druga[1].split(':');
+      let temp='';
+      for(let j=1;j<druga[1].length;j++){
+        if(druga[1][j]==='"'){
+          break;
+        }
+        temp += druga[1][j];
+      }
+      temp=parseInt(temp);
+      if(i===0){jedinice=temp;}else if(i===1){dvice=temp;}else if(i===2){trice=temp;}else if(i===3){cetvorke=temp;}else{petice=temp;}
+    }
+    if(jedinice===0 && dvice===0 && trice===0 && cetvorke===0 && petice===0){
+      jedinice=dvice=trice=cetvorke=petice=20;
+    }
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Task', 'Hours per Day'],
+        ['Ones',     jedinice],
+        ['Twos',      dvice],
+        ['Threes',      trice],
+        ['Fours',      cetvorke],
+        ['Fives',      petice],
+      ]);
+      var options = {
+        title: 'User satisfaction',
+        pieHole: 0.4,
+        slices: {
+          0: { color: '#ff4545' },
+          1: { color: '#ffa534' },
+          2: { color: '#ffe234' },
+          3: { color: '#b7dd29' },
+          4: { color: '#57e32c' },
+        }
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('donutchart1'));
+      chart.draw(data, options);
+    }
+  </script>
+  <title>Projekat</title>
+  <link rel='stylesheet' href='/stylesheets/style.css'>
+  <link rel='stylesheet' href='/stylesheets/admin.css'>
+  <link rel="icon" href="/images/s1.png">
+</head>
+<body class="h-100">
+<header class="navbar navbar-expand-lg navbar-light bg-dark justify-content-between" style="height: 7.6vh">
+  <h3 style="color: #14a0e0; padding-left: 5px;" class="header-text"><%=ime%></h3>
+  <button type="button" id="logout" class="btn btn-outline-primary">Logout</button>
+</header>
+<main style="height: 92.4vh;background-image: url('/images/admin_bg.jpg');background-size: cover;background-repeat: no-repeat;" class="container-fluid p-0">
+  <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" style="background: deepskyblue;">
+          <h1 class="modal-title fs-5" id="exampleModalLabel3">Block chosen host</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body d-flex flex-column justify-content-around" style="height: 20vh;background-color: #e1e5e9">
+          <div>
+            <label for="radio-1" style="margin-right: 1vw">Block host on 15 days:</label>
+            <input class="form-check-input" type="radio" id="radio-1" name="radio-group" value="15">
+          </div>
+          <br>
+          <div>
+            <label for="radio-2" style="margin-right: 1vw">Block host on 30 days:</label>
+            <input class="form-check-input" type="radio" id="radio-2" name="radio-group" value="30">
+          </div>
+          <br>
+          <button class="btn btn-info" data-bs-dismiss="modal" id="block">Block the host</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 style="color: #424242; font-size: 3.3vw;padding-left: 6.3vw;padding-top: 2.1vw;padding-bottom: 1.5vw" class="d-sm-none d-none d-md-block animate__animated animate__flipInX">Hosts</h2>
+
+  <div class="row m-0 justify-content-around">
+
+    <div id="eventi" style="height: 60vh;background: #bbdfff42;" class="event overflow-auto c-effect col-sm-10 col-10 col-md-7 p-0 order-md-first order-last animate__animated animate__fadeIn">
+      <table class="table table-hover">
+        <%for(let i =0; i<hosts.length; i++){%>
+          <tr class="for-hosts d-flex flex-column" style="border-bottom-width: 0">
+              <td class="d-flex flex-row justify-content-between td2 hvr-underline-reveal">
+
+                <div class="d-flex flex-row align-items-center">
+                  <img src="/images/user.png" class="im2">
+                  <h3 style="align-self: start; padding-left: 0.5vw;color:darkgray;"><%=hosts[i].username%></h3>
+                </div>
+
+                <div style="float: right;margin-right: 1vw;" class="d-flex align-items-center">
+                  <button data-host="<%=hosts[i].id%>" type="button" class="btn block-b btn-rounded btn-outline-info" data-bs-toggle="modal" data-bs-target="#exampleModal3">Block</button>
+                  <button data-host="<%=hosts[i].id%>" class="delete-host btn btn-rounded btn-outline-danger">Delete</button>
+                </div>
+
+              </td>
+            <td style="display: none;padding: 0;border-bottom-width: 0" data-host-id="<%=hosts[i].id%>" class="for-events"></td>
+          </tr>
+        <%}%>
+      </table>
+    </div>
+
+    <div id="overall2" style="background: #f0f8ff8f;" class="card rounded-0 c-effect zo col-sm-10 col-10 col-md-3 p-0 order-sm-first mb-sm-3 mb-3 mt-3 mt-sm-3 mt-3 mt-md-0 animate__animated animate__fadeIn">
+      <div id="donutchart1"></div>
+      <details class="c-effect2 overflow-auto det" style="background: white;">
+        <summary style="color: darkgray" class="c-effect2 sum1 f-details" id="za_extend"><span>See forbidden words</span><img class="rotate" src="/images/down-arrow.png"></summary>
+        <table class="table table-hover">
+          <tbody id="forbidden">
+            <%for(let i = 0; i<forbidden.length; i++){%>
+            <tr>
+
+              <td style="flex:1;" class="d-flex flex-row justify-content-between">
+                <span><%=forbidden[i].word%></span>
+                <button type="button" class="delete-word btn btn-rounded btn-outline-danger">Delete</button>
+              </td>
+
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
+
+        <div class="d-flex flex-row" id="for-for">
+          <input class="form-control" type="text" name="word" id="word">
+          <button id="for-forbidden" class="btn btn-rounded btn-primary">Add</button>
+        </div>
+
+      </details>
+    </div>
+  </div>
+</main>
+<script src="/javascripts/for-admin.js"></script>
+</body>
+</html>

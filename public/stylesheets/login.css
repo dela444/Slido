@@ -1,0 +1,79 @@
+.m2 {
+    position: relative;
+    background-image: url('../images/slika5.jpg');
+    background-size: cover;
+    backdrop-filter: blur(5px);
+}
+.m2::before {
+    content: "";
+    background-image: url('../images/slika5.jpg');
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.6;
+}
+#alert{
+    color: rgb(190 25 36);
+    text-align: center;
+}
+#regi{
+    height: 25%;
+    margin-bottom: 1.8vw;
+}
+.slink{
+    color: #0072FF;
+    text-decoration: none;
+    font-weight: 600;
+}
+.form-login{
+    border:1px solid black;
+    overflow: hidden;
+    border-radius: 2rem;
+    height: 55vh;
+    -webkit-box-shadow: 0 13px 23px 0 rgb(0 0 0 / 25%);
+    box-shadow: 0 13px 23px 0 rgb(0 0 0 / 25%);
+    background-color: #fdfdfd2b;
+}
+.register-inputs{
+    border:none;
+    width: 70%;
+    background-color: #e6e6e600;
+    outline: none;
+    color: #1c1c1c;
+    border-bottom: 3px solid #eeeeee;
+}
+.za_small{
+    color: black;
+    font-size: 13.3px;
+}
+.log{
+    border:0;
+    color:#ffffff;
+    background: repeating-linear-gradient(45deg, #00a1ff, #005fff 45px);
+}
+.welcome{
+    margin:0;
+    text-align: center;
+    font-size: 21px;
+    color: #333333;
+}
+@media (max-width: 377px){
+    .form-login{width: 85vw !important;}
+}
+@media (max-width: 450px){
+    .form-login{width: 70vw;}
+}
+@media (min-width: 575px) and (max-width: 767px) {
+    .welcome{font-size: 21px;}
+}
+@media (min-width: 768px) and (max-width: 992px){
+    .welcome{font-size: 21px;}
+}
+@media (min-width: 1300px) {
+    .form-login input{font-size: 1.3vw}
+    .form-login small{font-size: 1vw !important;}
+    .form-login .welcome{font-size: 2vw}
+}

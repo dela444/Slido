@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+  <meta charset="utf-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <script src="/socket.io/socket.io.js"></script>
+  <title>Projekat</title>
+  <link rel='stylesheet' href='/stylesheets/style.css'>
+  <link rel='stylesheet' href='/stylesheets/users.css'>
+  <link rel="icon" href="/images/s1.png">
+</head>
+<body class="h-100">
+
+<header class="navbar navbar-expand-lg navbar-light bg-dark" style="height: 7.6vh">
+  <a href="http://localhost:3000/" style="text-decoration: none"><h3 style="color: #008ec7; padding-left: 5px;">Slido</h3></a>
+</header>
+
+<main class="container-fluid" style="height: 92.4vh;<%if(slika){%>background-image: url('/images/<%=slika%>');background-size: cover;background-repeat: no-repeat;<%}else{%>background-image: url('/images/users_bg.jpg');background-size: cover;background-repeat: no-repeat;<%}%>">
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header ex">
+          <h1 class="modal-title" style="color: aliceblue;" id="exampleModalLabel">Ask the speaker</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body f-a roundedm">
+          <textarea name="asked" class="ask-input textarea1 roundedm"></textarea>
+          <button type="button" class="ask-button btn btn-rounded btn-primary ask2" data-event-id="<%=ev%>">Ask</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button id="ask1" type="button" class="btn btn-primary d-none d-sm-block" data-bs-toggle="modal" data-bs-target="#exampleModal">Ask</button>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-7 col-md-8 col-sm-10 col-11 overfl" id="q">
+
+      <div class="btn-group d-flex flex-row">
+        <button type="button" class="btn btn-light" id="all">All</button>
+        <button type="button" class="btn btn-light" id="answered">Answered</button>
+        <button type="button" class="btn btn-light" id="unanswered">Unanswered</button>
+      </div>
+
+      <div class="d-flex flex-row btn-group" style="padding-bottom: 1px">
+        <button id="sort-by-time" class="btn btn-outline-danger btn-link rounded-0">Sort by Time</button>
+        <button id="sort-by-likes" class="btn btn-outline-success btn-link rounded-0">Sort by Likes</button>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <div id="for-ask" class="roundedm f-a">
+          <textarea class="ask-input roundedm textarea1"></textarea>
+          <button class="ask-button btn btn-rounded btn-primary ask2" data-event-id="<%=ev%>" type="button">Ask</button>
+        </div>
+      </div>
+
+
+      <div id="eventi" class="qu" style="width: 100%;box-shadow: none;background: transparent">
+        <table class="table">
+          <tbody id="table-questions" data-q="<%=questions.length%>">
+          <%for(let i =0; i<questions.length; i++){%>
+
+
+          <tr class="question d-flex flex-column tr1">
+            <td class="d-flex flex-row justify-content-between td1 proba">
+              <h3 class="f-q"><%=questions[i].tekst%></h3>
+              <div style="float: right" class="for-likes" data-question-id ="<%=questions[i].id%>">
+                <span><%=questions[i].likes%></span>
+                <img src="/images/like1.png" class="im">
+              </div>
+            </td>
+            <script>
+              if(localStorage.getItem(<%=questions[i].id%>) === null){
+                localStorage.setItem('<%=questions[i].id%>','false');
+              }else if(localStorage.getItem(<%=questions[i].id%>) === "true"){
+                $(`.for-likes[data-question-id=<%=questions[i].id%>] img`).css('width','2vw');
+                $(`.for-likes[data-question-id=<%=questions[i].id%>] img`).attr('src','/images/like2.png')
+                $(`.for-likes[data-question-id=<%=questions[i].id%>] span`).css('font-size','2vw');
+              }
+            </script>
+            <%if(questions[i].answer){%>
+            <td class="td1 bg-answer" style="font-family: 'Inter', sans-serif;">
+              <h3><%=questions[i].answer%></h3>
+            </td>
+            <%}else{%>
+              <td class="td1 bg-answer" style="display: none;"></td>
+            <%}%>
+          </tr>
+          <%}%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+<script src="/javascripts/for-users.js"></script>
+</body>
+</html>

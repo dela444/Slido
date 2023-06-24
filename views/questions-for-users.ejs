@@ -1,0 +1,29 @@
+
+
+  <%for(let i =0; i<questions.length; i++){%>
+  <tr class="question d-flex flex-column tr1">
+
+    <td class="d-flex flex-row justify-content-between td1 proba">
+      <h3 class="f-q"><%=questions[i].tekst%></h3>
+      <div style="float: right" class="for-likes" data-question-id ="<%=questions[i].id%>">
+        <span><%=questions[i].likes%></span>
+        <img src="/images/like1.png" class="im">
+      </div>
+    </td>
+    <script>
+      if(localStorage.getItem(<%=questions[i].id%>) === "true"){
+        $(`.for-likes[data-question-id=<%=questions[i].id%>] img`).css('width','2vw');
+        $(`.for-likes[data-question-id=<%=questions[i].id%>] img`).attr('src','/images/like2.png')
+        $(`.for-likes[data-question-id=<%=questions[i].id%>] span`).css('font-size','2vw');
+      }
+    </script>
+
+    <%if(questions[i].answer){%>
+    <td class="td1 bg-answer" style="font-family: 'Inter', sans-serif;">
+      <h3><%=questions[i].answer%></h3>
+    </td>
+    <%}else{%>
+      <td class="td1 bg-answer" style="display: none;"></td>
+    <%}%>
+  </tr>
+  <%}%>
